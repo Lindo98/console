@@ -79,3 +79,48 @@ products.forEach((product) => {
 
 const nameCharacters = products.filter((product) => product.product.length > 5);
 console.log(nameCharacters);
+
+//Filter out products without prices, convert string prices to numbers, and calculate the total price using reduce.
+
+const validProducts = products.filter(
+  (product) => product.price && !isNaN(product.price)
+);
+const productsWithNumberPrices = validProducts.map((product) => ({
+  ...product,
+  price: Number(product.price),
+}));
+const totalPrice = productsWithNumberPrices.reduce(
+  (acc, product) => acc + product.price,
+  0
+);
+console.log(totalPrice);
+
+// Concatenate Product Names
+
+const concatenatedNames = products
+  .map((product) => product.product)
+  .reduce((acc, product) => acc + product, "");
+console.log(concatenatedNames);
+
+// identify the highest and lowest-priced items, returning a string formatted as "Highest: X. Lowest: Y."
+
+const highestPriced = validProducts.reduce((max, product) =>
+  product.price > max.price ? product : max
+);
+const lowestPriced = validProducts.reduce((min, product) =>
+  product.price < min.price ? product : min
+);
+console.log(
+  "Highest: ",
+  highestPriced.product,
+  "Lowest: ",
+  lowestPriced.product
+);
+
+// Object Transformation
+
+const transformedProducts = products.map((product) => ({
+  product: product.product,
+  cost: product.price,
+}));
+console.log(transformedProducts);
